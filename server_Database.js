@@ -27,12 +27,12 @@ let datas;
 app.post('/login', async (req,res)=>{
      datas = await req.body;
     let insert = await collection.insertOne(datas);
+     //storing form data to a local file!
     let LoginData = `{_id:${datas._id} username: ${datas.username}, password: ${datas.password}}\n`;
-
-  //storing form data to a local file!
-    fs.appendFileSync('./loginDetails', LoginData);
+    fs.appendFile('./loginDetails.txt', JSON.stringify(LoginData), err=>{if(err) throw err;})
     res.send('Submitted');
 });
+ 
 
 //? displaying data in UI:
 app.get('/get-users', async (req, res) => {
